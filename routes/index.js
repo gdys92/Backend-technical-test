@@ -1,14 +1,14 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/', /*async */(req, res) => {
-  /*  let books
+router.get('/', async (req, res) => {
+  let movies
     try {
-      books = await Book.find().sort({ createdAt: 'desc' }).limit(10).exec()
+      movies = await movie.find().sort({ createdAt: 'desc' }).limit(10).exec()
     } catch {
-      books = []
+      movies = []
     }
-    res.render('index', { books: books }) */
+    res.render('index', { movies: movies }) 
     res.render('index')
   })
   
