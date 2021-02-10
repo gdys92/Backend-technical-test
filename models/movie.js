@@ -1,45 +1,30 @@
-const mongoose = require('mongoose')
-const path = require('path')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const coverImageBasePath = 'uploads/movieCovers'
+const movieSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    img: {
+        type: Buffer,
+        required: true
+    },
+    imgType: {
+        type: String,
+        required: true
+    }
+    
+});
 
-const movieSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String
-  },
-  publishDate: {
-    type: Date,
-    required: true
-  },
-  pageCount: {
-    type: Number,
-    required: true
-  },
-  createdAt: {
-    type: Date,
-    required: true,
-    default: Date.now
-  },
-  coverImageName: {
-    type: String,
-    required: true
-  },
-  rating: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'Rating'
-  }
+movieSchema.virtual('coverImagePath').get(function (){
+    if(this.img != null && this.imgType != null){
+        return `data:${this.imgType};charset=utf-8;base64,${this.img.toString('base64')}`;
+    }
 })
 
-movieSchema.virtual('coverImagePath').get(function() {
-  if (this.coverImageName != null) {
-    return path.join('/', coverImageBasePath, this.coverImageName)
-  }
-})
-
-module.exports = mongoose.model('Movie', movieSchema)
-module.exports.coverImageBasePath = coverImageBasePath
+module.exports = mongoose.model('movies', movieSchema);
