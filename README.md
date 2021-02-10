@@ -1,4 +1,4 @@
-### Backend test
+# Backend test
 
 Made with Node.js, Express.js and mongoDB.
 
